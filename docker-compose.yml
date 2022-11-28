@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+    api:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: rtt-client
+        restart: always
+        depends_on:
+            - mariadb
+         #       condition: service_completed_successfully
+        ports:
+            - "8080:8080"
+    mariadb:
+        image: mariadb
+        container_name: mariadb
+        environment:
+            - MYSQL_ROOT_PASSWORD=1234
+            - MYSQL_DATABASE=testdb
+            - MYSQL_USER=kgh
+            - MYSQL_PASSWORD=1234
+        volumes:
+            - database:/var/lib/mysql
+        ports:
+            - "3306:3306"
+volumes:
+    database:
